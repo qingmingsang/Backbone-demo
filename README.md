@@ -1,8 +1,8 @@
 # easyShoppingTrolley
 Backbone_demo
 
--Backbone
--jquery
--mustache
--grunt 
--browserify
+-Backbone <br>
+-jquery <br>
+-mustache <br>
+-grunt  <br>
+-browserify <br>
