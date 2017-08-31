@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+
+    (function ($) {
+        var Book = Backbone.Model.extend({
+            defaults: {
+                title: 'default'
+            },
+            initialize: function () {
+                console.log(this.get('title'));
+            }
+        });
+
+        var NewBooks = Backbone.Collection.extend({
+            model: Book,
+            url: 'http://localhost:3000/books'
+        });
+
+        var books = new NewBooks();
+
+        //在这post了
+        var onebook = books.create({
+            title: "I'm coming",
+        });
+
+        books.fetch({
+            success: function (collection, response, options) {
+                console.log('success');
+                collection.each(function (book) {
+                    console.warn(book.get('title'));
+                });
+            }, error: function (collection, response, options) {
+                console.error('error');
+            }
+        });
+
+        console.log('---begin---');
+        books.each(function (book) {
+            console.info(book.get('title'));
+        });
+        console.log('---end---');
+
+    })(jQuery);
+
+</script>
+</body>
+
+</html>

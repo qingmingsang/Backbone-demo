@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script type="text/template" id="template">
+    　　
+    <div><%= name %></div>
+</script>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+
+        var M = Backbone.Model.extend({
+            defaults: {name: "hello"}
+        });
+
+        var V = Backbone.View.extend({
+            initialize: function () {
+                //给this.model绑定change事件，事件响应函数是this.show，
+                // this.show方法中的this指向是this(view)，而不是this.model（model），
+                // 这就是listerTo方法跟on的不同。
+                this.listenTo(this.model, "change", this.show);
+            },
+            show: function (model) {
+                console.log(this.model.toJSON());
+                console.log(JSON.stringify(this.model));
+                //this.model.toJSON() = {name:hi}，套入模板后变成<div>hi</div>，最后添加到页面上。
+                // 这里做到了html和js的分离。html用模板来实现。
+                $("body").append(this.template(this.model.toJSON()));
+            },
+            template: _.template($("#template").html())
+    });
+
+        var m = new M();
+
+        var v = new V({model: m});
+
+        m.set("name", "hi");
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

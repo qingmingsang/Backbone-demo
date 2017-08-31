@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+        var route = Backbone.Router.extend({
+            routes:{
+                "help":"help",
+                "search/:query":"search",    //:代表这个字符是变量，意思就是query是一个变量，假设query=chaojidan，那么这里的"search/chaojidan"对应search函数。
+                "search/:query/p:page": "search"
+            },
+
+            help:function(){
+                console.log("help");
+            },
+
+            search:function(query,page){
+                console.log(query+"_"+page);
+            }
+
+        });
+
+        var w = new route();
+
+        //必须执行这个代码，路由才能正常使用。这时，历史管理也实现了。移动端开发很适合这种单页操作，不用页面的跳转，只要改变hash值就能进行功能的实现。
+        Backbone.history.start();
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

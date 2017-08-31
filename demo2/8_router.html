@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+<a href="#actions">testActions</a>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+
+    (function ($) {
+        var AppRouter = Backbone.Router.extend({
+            //点击该链接时，便会触发defaultRouter这个方法。
+            routes: {
+                "*actions": "defaultRoute"
+            },
+
+            defaultRoute: function (actions) {
+                console.log(actions);
+            }
+        });
+
+        var app_router = new AppRouter;
+//需要通过调用Backbone.history.start()方法来初始化这个Router。
+        Backbone.history.start();
+    })(jQuery);
+
+</script>
+</body>
+
+</html>

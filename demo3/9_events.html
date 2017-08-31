@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+<input/>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+
+        var V = Backbone.View.extend({
+            el:$("body"),
+            events :{
+                "click input": "aaa",
+                "mouseover li" : "bbb"
+            },
+            aaa:function(){
+                console.log("aaa");
+            },
+            bbb:function(){
+                console.log("bbb");
+            }
+        });
+
+        //当new这个视图后，页面上的input就会绑定click事件，只要点击input，就会执行aaa方法。
+        // 同时，页面上的li元素也会绑定mouseover事件。
+        // 视图的el指向的是页面的body元素，是el指向的元素就是此视图的根元素，事件的绑定会从这个根元素上开始查找元素。
+        var view = new V;
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

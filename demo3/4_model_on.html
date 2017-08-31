@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+
+        var M = Backbone.Model.extend({
+            defaults: {name: "san", surname: "su"},
+            initialize: function () {   //new M时，会执行这个初始化函数。
+                this.on("change", function () {   //监听change事件
+                    console.log("change model");
+                });
+                this.on("change:name", function (model) {   //监听change事件
+                    //回调方法中的参数就是model对象。
+                    console.log("change model name");
+                })
+            }
+        });
+
+        var model = new M();
+
+        model.set("name", "world");    //改变模型的change:name值时，就会触发change事件。
+        model.set("surname", "hello"); ////改变模型的值时，就会触发change事件
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

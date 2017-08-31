@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+
+        var model2 = new Backbone.Model({"name":"hello"});
+
+        var model3 = new Backbone.Model({"name":"hi"});
+
+        var models = new Backbone.Collection();
+
+        models.add(model2 );
+
+        models.add(model3 );
+
+        console.log(models)
+        console.log(JSON.stringify(models));//[{"name":"hello"},{"name":"hi"}]
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

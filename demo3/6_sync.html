@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+        //无效！
+        Backbone.sync = function (method, model) {
+            console.log(method);
+            model.id = 1;　　//服务器通过model的id属性来识别模型的唯一性
+            //method的值有五种：
+            // 1. create（post请求）。
+            // 2.update（put请求）。
+            // 3.delete（delete请求）。
+            // 4.read（get请求）
+            // 5.patch（patch请求）。
+            // 在这个例子中，
+            // 当第一次调用sava方法时，是post请求，在服务器上创建name:"hello"。
+            // 当第二次调用sava({name:"hi"})方法时，是put请求，因为服务器上这时已经有name值了，现在是更新服务器上的name值为"hi"。
+        }
+
+        var M = Backbone.Model.extend({
+            defaults: {name: "hello"},
+            url: "http://localhost:3000/man"
+        });
+
+        var m = new M();
+
+        //保存model的数据，把数据同步到服务器上，调用的是Backbone.sync方法（默认使用ajax请求，如果引入了jQuery，就会使用jQuery的ajax）。
+        // 我们只要在model中设置url属性就行了，这样程序才知道把数据同步到哪个服务器上，其实就是同步到这个url上。
+        // 当然你可以重写Backbone.sync方法，来改变使用ajax方式同步服务器的操作。
+        m.save();
+
+        m.save({name: "hi"});
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

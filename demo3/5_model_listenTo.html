@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+
+        var M = Backbone.Model.extend({
+            defaults: {name: "hello"}
+        });
+
+        var V = Backbone.View.extend({
+
+            //new V时，会跟这个视图的model绑定change事件，回调方法是视图的show方法
+            initialize: function () {
+                //listenTo方法跟on一样是绑定事件的，但是listenTo可以设置this的指向，它多一个参数。它的意思就是：给this.model绑定change事件。
+                this.listenTo(this.model, "change", this.show);
+            },
+            show: function (model) {
+                console.warn(model.get("name"));
+            }
+        });
+
+        var m = new M();
+
+        var v = new V({model: m});
+
+        //改变模型的name值时，就会触发change事件，在视图中弹出模型设置的name值。
+        m.set("name", "hi");    //hi
+        m.set("name", "bye");   //bye
+    })(jQuery);
+</script>
+</body>
+
+</html>

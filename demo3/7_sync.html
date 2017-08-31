@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+        //无效！
+        Backbone.sync = function (method, model) {
+            console.log(method);    //当调用fetch方法时，也会执行sync方法，这时的method就是read（get请求），从服务器获取数据。
+        }
+
+        var C = Backbone.Collection.extend({
+            initialize: function () {
+                this.on("reset", function () {   //数据获取成功后，就会触发这个reset事件
+                    console.log("reset");
+                })
+            },
+            url: "/man"
+        });
+
+        var models = new C();
+
+        models.fetch();   //从服务器/man 路径获取数据
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

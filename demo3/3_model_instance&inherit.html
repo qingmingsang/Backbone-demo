@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+    (function ($) {
+
+        var M = Backbone.Model.extend(
+            {
+                defaults:{
+                    name:"hello"
+                },
+                aaa: function () {
+                    return  'aaa';
+                }
+            },
+            {
+                bbb: function () {
+                    return  'bbb';
+                }
+            }
+        );  //这里的aaa就是实例方法，bbb方法就是静态方法。
+
+        var model = new M();
+
+        console.log(model.aaa());//'aaa'
+
+        console.log(M.bbb());//'bbb'
+
+        console.log(model.get("name"));    //"hello"
+
+
+        var childM = M.extend();    //继承，M是父类，有aaa实例方法，childM是子类，继承M，所以也有了父类M的aaa方法
+
+        var child_model = new childM();
+
+        console.log(child_model.aaa());//'aaa'
+
+        console.log(childM.bbb());//'bbb'
+
+        console.log(child_model.get("name"));    //"hello"
+
+    })(jQuery);
+</script>
+</body>
+
+</html>

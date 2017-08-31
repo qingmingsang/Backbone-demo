@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script>
+
+    (function ($) {
+        var Book = Backbone.Model.extend({
+            defaults: {
+                title: 'default'
+            },
+            initialize: function () {
+                console.log(this.get('title'));
+            }
+        });
+
+        var BookShelf = Backbone.Collection.extend({
+            model: Book
+        });
+
+        //第一种方法
+        //在这里就把book的数据加入了BookShelf
+        //相当于初始化
+        var book1 = new Book({title: 'book1'});
+        var book2 = new Book({title: 'book2'});
+        var book3 = new Book({title: 'book3'});
+
+        //第二种方法
+        //这里实际是实际的操作
+        //注意这里面是数组,或者使用add
+        //var bookShelf = new BookShelf([book1, book2, book3]);
+
+        //这里相当于实例化，实例化时会进行ajax请求
+        var bookShelf = new BookShelf();
+
+        //第三种方法
+        //这里实际是实际的操作
+        //bookShelf.add(book1);
+        //bookShelf.add(book2);
+        //bookShelf.add(book3);
+        //如果不先add，remove是无效的
+        //bookShelf.remove(book3);
+
+
+        //注意这里
+        bookShelf.url = 'http://localhost:3000/books';
+        //collection在fetch到数据之后，默认情况会调用set方法(set方法向collection里面添加新model，如果该model之前存在则会合并，与此同时会触发collection的add事件)
+        bookShelf.fetch({
+            success: function (collection, response, options) {
+                console.log('success');
+                collection.each(function (book) {
+                    console.warn(book.get('title'));
+                });
+            }, error: function (collection, response, options) {
+                console.error('error');
+            }
+        });
+
+        console.log('---begin---');
+        bookShelf.each(function (book) {
+            console.info(book.get('title'));
+        });
+        console.log('---end---');
+
+    })(jQuery);
+
+</script>
+</body>
+
+</html>
